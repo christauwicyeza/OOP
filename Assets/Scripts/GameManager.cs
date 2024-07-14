@@ -1,4 +1,4 @@
- using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -6,13 +6,13 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public GameObject fallingObjectPrefab;
-    public Basket basket;
 
     void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     private void SpawnObject()
     {
         Vector3 spawnPosition = GetRandomSpawnPosition();
-        GameObject newObject = Instantiate(fallingObjectPrefab, spawnPosition, Quaternion.identity);
+        GameObject newObject = FallingObjectFactory.CreateFallingObject(fallingObjectPrefab, spawnPosition);
         newObject.GetComponent<FallingObject>().Fall();
     }
 
